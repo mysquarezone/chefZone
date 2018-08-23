@@ -1,0 +1,18 @@
+1. Create an account in manage.chef.io
+2. login to manage.chef.io
+3. Download chefDK for your laptop/workstation
+   Or install from chocolatey
+   	knife --version
+   	chef --version
+4. Install ubuntu servers(2) in AWS
+5. Download starter kit from chef server under administration.
+6. Extract starter kit.
+7. Navigate to chefrepo folder as the server information will be availble in this folder and need to run the commands from this folder.
+8. create a folder called keys in chef repo folder
+9. copy the pem file of AWS server to keys folder.
+10. bootstrap by using below command.
+knife bootstrap 13.236.84.87 -x ubuntu -i .\keys\cheftest.pem --sudo -N ec2-13-236-84-87.ap-southeast-2.compute.amazonaws.com
+knife bootstrap 52.65.38.126 -x ubuntu -i .\keys\cheftest.pem --sudo -N ec2-52-65-38-126.ap-southeast-2.compute.amazonaws.com
+
+11. after the above command, check node is visible in cheef server.
+12. knife node list -> to check nodes list
