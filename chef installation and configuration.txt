@@ -22,5 +22,24 @@ knife bootstrap 52.65.38.126 -x ubuntu -i .\keys\cheftest.pem --sudo -N ec2-52-6
  	chef generate cookbook
 	chef generate cookbook helloworld
 15. write a resource in recipe default.rb
-16. 
+    	identify manual steps of task.
+	convert each step into resource.
+16. Upload cookbook to server.
+	berks install
+	berks upload
+	
+	knife cookbook list
+	knife cookbook delete * -> to list and delete the existing cookbooks on chef server.
+17. check cookbook uploaded to chef server under policy.
+18. RunList: collection of recipies that are to be applied to node.
+    add cookbook to runlist to nodes on server under server.
+19. wait for convergence or manually execute chef_client on node.
+20. add new recipe:
+	chef generate recipe
+	chef generate recipe . utils (. for current folder, utils is the recipe name).
+21. change the version of cookbook. 
+	we can't upload with the same version
+	change the version in metadata.rb
+    berks upload
+
     
