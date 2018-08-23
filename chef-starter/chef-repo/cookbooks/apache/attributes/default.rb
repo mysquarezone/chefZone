@@ -5,3 +5,4 @@ if node['platform'] == "ubuntu"
 else
     default['package_name'] = "httpd"
 end
+
