@@ -16,3 +16,9 @@ knife bootstrap 52.65.38.126 -x ubuntu -i .\keys\cheftest.pem --sudo -N ec2-52-6
 
 11. after the above command, check node is visible in cheef server.
 12. knife node list -> to check nodes list
+13. Chef generators -> help us to generate cookbooks, recipe, etc..
+	chef generate
+14. Generate cookbook.
+ 	chef generate cookbook
+	chef generate cookbook helloworld
+15. 
