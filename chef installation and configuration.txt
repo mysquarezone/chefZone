@@ -13,12 +13,14 @@
 10. bootstrap by using below command.
 knife bootstrap 13.236.84.87 -x ubuntu -i .\keys\cheftest.pem --sudo -N ec2-13-236-84-87.ap-southeast-2.compute.amazonaws.com
 knife bootstrap 52.65.38.126 -x ubuntu -i .\keys\cheftest.pem --sudo -N ec2-52-65-38-126.ap-southeast-2.compute.amazonaws.com
-
 11. after the above command, check node is visible in cheef server.
-12. knife node list -> to check nodes list
+    knife node list -> to check nodes list
+    sudo chef-client -> run this command on server to confirm chef client installed.
 13. Chef generators -> help us to generate cookbooks, recipe, etc..
 	chef generate
 14. Generate cookbook.
  	chef generate cookbook
 	chef generate cookbook helloworld
-15. 
+15. write a resource in recipe default.rb
+16. 
+    
