@@ -1,13 +1,13 @@
 #default['package_name'] = "apache2"
 
-#if node['platform'] == "ubuntu"
+# if node['platform'] == "ubuntu"
 #    default['package_name'] = "apache2"
-#else
+# else
 #    default['package_name'] = "httpd"
-#end
+# end
 
 if node['platform'] == "ubuntu"
-    default['package_name'] = "tomcat"
+    default['package_name'] = "tomcat8"
 else
-    default['package_name'] = "tomcat7"
+    default['package_name'] = "tomcat"
 end

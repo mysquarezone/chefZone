@@ -1,2 +1,7 @@
-1. kitchen converge
-2. ne
+1. change the below in kitchen.yaml file
+	platforms
+	runlist
+
+2. kitchen converge
+3. kitchen login
+4. kitchen destroy
