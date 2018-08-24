@@ -8,3 +8,6 @@ apt_update 'updatepackage' do
   action :update
   only_if node['platform'] == "ubuntu"
 end
+
+#defining variable(in ruby), Below is example for array
+packages = ["tree","git","apache2"]
