@@ -1,7 +1,8 @@
-1. change the below in kitchen.yaml file
+1. Install vagrant
+2. change the below in kitchen.yaml file
 	platforms
 	runlist
 
-2. kitchen converge
-3. kitchen login
-4. kitchen destroy
+3. kitchen converge
+4. kitchen login
+5. kitchen destroy
