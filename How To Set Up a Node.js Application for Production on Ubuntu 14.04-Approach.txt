@@ -1,0 +1,5 @@
+test kitchen setup
+
+for appserver
+update packages 
+create directory called nodetemp
