@@ -35,8 +35,63 @@ directory node['appserver']['node_executables'] do
     action :create
 end
 
-execute 'apache_configtest' do
+execute 'untarnodeexecutables' do
     command 'tar xvf node-v*.tar.?z --strip-components=1 -C node['appserver']['node_executables']'
 end
 
+directory node['appserver']['node_executables']/etc do
+    owner 'root'
+    group 'root'
+    mode '0755'
+    action :create
+end
 
+execute 'echo command execute' do
+    command 'echo 'prefix=/usr/local' > node/etc/npmrc'
+end
+
+remote_directory '/opt/' do
+  source 'node['appserver']['node_executables']'
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create_if_missing
+end
+
+execute 'echo command execute' do
+    command 'chown -R root: /opt/node'
+end
+
+link '/usr/local/bin/node' do
+    to '/opt/node/bin/node'
+    mode '0755'
+    link_type :symbolic
+end
+
+link '/usr/local/bin/npm' do
+    to '/opt/node/bin/npm'
+    mode '0755'
+    link_type :symbolic
+end
+
+file 'node['appserver']['node_executables']/hello.js' do
+    content 'var http = require('http');
+    http.createServer(function (req, res) {
+      res.writeHead(200, {'Content-Type': 'text/plain'});
+      res.end('Hello World\n');
+    }).listen(8080, '172.31.4.196');
+    console.log('Server running at http://172.31.4.196:8080/');'
+    mode '0755'
+end
+
+apt_update 'updatepackages' do
+    action :update
+end
+
+execute 'Install npm' do
+    command 'npm install pm2 -g'
+end
+
+execute 'start hello.js' do
+    command 'pm2 start node['appserver']['node_executables']/hello.js'
+end

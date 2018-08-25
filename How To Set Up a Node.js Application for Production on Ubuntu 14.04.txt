@@ -33,7 +33,7 @@ http.createServer(function (req, res) {
 console.log('Server running at http://172.31.7.91:8080/');
 
 
-- node hello.j
+- node hello.js
 - curl http://172.31.7.91:8080
 
 - sudo apt-get update
