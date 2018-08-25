@@ -1,0 +1,2 @@
+Reference Article: https://www.computernetworkingnotes.com/rhce-study-guide/how-to-configure-syslog-server-in-linux.html
+
