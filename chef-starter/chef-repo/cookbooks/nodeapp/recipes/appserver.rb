@@ -5,7 +5,7 @@
 # Copyright:: 2018, The Authors, All Rights Reserved.
 
 #Installing GIT
-package ['appserver']['git'] do
+package node['appserver']['git'] do
   action :install
 end
 
@@ -20,42 +20,32 @@ end
 
 #download tar file from the location "https://nodejs.org/dist/v8.11.4/node-v8.11.4-linux-x64.tar.xz"
 
-remote_file "'node['appserver']['nodejs_temp_path']'/node-v8.11.4-linux-x64.tar.xz" do
+remote_file '/home/ubuntu/nodetemp/node-v8.11.4-linux-x64.tar.xz' do
     source 'https://nodejs.org/dist/v8.11.4/node-v8.11.4-linux-x64.tar.xz'
-    owner 'root'
-    group 'root'
     mode '0755'
     action :create
 end
 
 directory node['appserver']['node_executables'] do
-    owner 'root'
-    group 'root'
     mode '0755'
     action :create
 end
 
 execute 'untarnodeexecutables' do
-    command "tar xvf node-v*.tar.?z --strip-components=1 -C 'node['appserver']['node_executables']'"
+    command "tar xvf /home/ubuntu/nodetemp/node-v* --strip-components=1 -C /home/ubuntu/node"
 end
 
-directory node['appserver']['node_executables']/etc do
-    owner 'root'
-    group 'root'
+directory "/home/ubuntu/node/etc" do
     mode '0755'
     action :create
 end
 
 execute 'echo command execute' do
-    command echo 'prefix=/usr/local' > node/etc/npmrc
+    command "echo 'prefix=/usr/local' > /home/ubuntu/node/etc/npmrc"
 end
 
-remote_directory '/opt/' do
-  source node['appserver']['node_executables']
-  owner 'root'
-  group 'root'
-  mode '0755'
-  action :create_if_missing
+execute 'Move folder' do
+    command "sudo mv -n /home/ubuntu/node /opt/"
 end
 
 execute 'echo command execute' do
@@ -74,9 +64,12 @@ link '/usr/local/bin/npm' do
     link_type :symbolic
 end
 
-file node['appserver']['node_executables']/hello.js do
-    content "var http = require('http'); http.createServer(function (req, res) { res.writeHead(200, {'Content-Type': 'text/plain'}); res.end('Hello World\n'); }).listen(8080, '172.31.4.196'); console.log('Server running at http://172.31.4.196:8080/');"
+
+
+file "/opt/node/hello.js" do
+    content "var http = require('http'); http.createServer(function (req, res) { res.writeHead(200, {'Content-Type': 'text/plain'}); res.end('Hello World\n'); }).listen(8080, '172.31.9.54'); console.log('Server running at http://172.31.9.54:8080/');"
     mode '0755'
+    action :create
 end
 
 apt_update 'updatepackages' do
@@ -88,5 +81,9 @@ execute 'Install npm' do
 end
 
 execute 'start hello.js' do
-    command pm2 start node['appserver']['node_executables']/hello.js
+    command "pm2 start /opt/node/hello.js"
+end
+
+apt_update 'updatepackages' do
+    action :update
 end
