@@ -7,3 +7,5 @@
 apt_update 'updatepackages' do
   action :update
 end
+
+include_recipe 'nodeapp-nvm::appserver'
