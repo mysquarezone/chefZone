@@ -20,16 +20,27 @@ execute 'nvm install' do
   action :run
 end
 
-directory '/home/vagrant/.nvm' do
-  owner 'vagrant'
-  group 'vagrant'
+current_userName = node['appserver']['username']
+
+directory node['appserver']['nvm']['home'] do
+  owner current_userName
+  group current_userName
   mode '0755'
   action :create
 end
 
-apt_update 'updatepackages' do
-  action :update
-end
+version = node['appserver']['node']['version']
+
+# reboot 'rebootmachinel' do
+#   action :reboot_now
+#   reason 'reboot after nvm install please'
+#   notifies :run, 'execute[node7 install]', :immediately
+# end
+
+
+# apt_update 'updatepackages' do
+#   action :update
+# end
 
 # execute 'install node' do
 #   command 'nvm install 8'
@@ -37,12 +48,30 @@ end
 # end
 
 # using attributes
-execute 'install nodejs' do
-  command 'nvm install 8.9'
-  action :run
+# execute 'node7 install' do
+#   cwd '/home/vagrant/.nvm/'
+#   command 'nvm install 7'
+#   user 'vagrant'
+#   group 'vagrant'
+#   timeout 180
+#   action :run
+# end
+
+# execute 'node7 use' do
+#   cwd '/home/vagrant/.nvm/'
+#   command "nvm use 7"
+#   user 'vagrant'
+#   group 'vagrant'
+#   action :run
+# end
+
+template node['appserver']['code_location'] do
+  source 'hello.js.erb'
+  owner current_userName
+  group current_userName
+  mode '0755'
+  action :create
 end
-
-
 
 
 # 2. Use chef suber market cookbook. Ref: https://supermarket.chef.io/cookbooks?utf8=%E2%9C%93&q=nvm&platforms%5B%5D=
@@ -57,5 +86,3 @@ end
 # 	alias_as_default true
 # 	action :create
 # end
-
-
