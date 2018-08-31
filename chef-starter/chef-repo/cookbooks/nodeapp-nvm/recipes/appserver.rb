@@ -31,46 +31,19 @@ end
 
 version = node['appserver']['node']['version']
 
-# reboot 'rebootmachinel' do
-#   action :reboot_now
-#   reason 'reboot after nvm install please'
-#   notifies :run, 'execute[node7 install]', :immediately
-# end
-
-
-# apt_update 'updatepackages' do
-#   action :update
-# end
-
-# execute 'install node' do
+# execute 'nvminstall' do
 #   command 'nvm install 8'
+#   user current_userName
 #   action :run
 # end
 
-# using attributes
-# execute 'node7 install' do
-#   cwd '/home/vagrant/.nvm/'
-#   command 'nvm install 7'
-#   user 'vagrant'
-#   group 'vagrant'
-#   timeout 180
-#   action :run
-# end
-
-# execute 'node7 use' do
-#   cwd '/home/vagrant/.nvm/'
-#   command "nvm use 7"
-#   user 'vagrant'
-#   group 'vagrant'
-#   action :run
-# end
 
 template node['appserver']['code_location'] do
   source 'hello.js.erb'
   owner current_userName
   group current_userName
   mode '0755'
-  action :create
+  action :create_if_missing
 end
 
 
